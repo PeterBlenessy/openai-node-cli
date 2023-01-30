@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "name": "openai-node",
+    "version": "0.1.0",
+    "author": "Peter Blenessy <peter.blenessy@gmail.com>",
+    "license": "MIT",  
+    "main": "index.js",
+    "scripts": {
+        "dev": "yarn dev",
+        "build": "yarn build",
+        "start": "yarn start"
+    },
+    "dependencies": {
+        "openai": "^3.1.0"
+    },
+    "engines": {
+        "node": ">=14.6.0"
+    }
+}
