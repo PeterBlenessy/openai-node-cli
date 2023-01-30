@@ -3,7 +3,7 @@
     "name": "openai-node",
     "version": "0.1.0",
     "author": "Peter Blenessy <peter.blenessy@gmail.com>",
-    "license": "MIT",  
+    "license": "MIT",
     "main": "index.js",
     "scripts": {
         "dev": "yarn dev",
@@ -11,6 +11,7 @@
         "start": "yarn start"
     },
     "dependencies": {
+        "dotenv": "^16.0.3",
         "openai": "^3.1.0"
     },
     "engines": {

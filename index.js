@@ -1,10 +1,12 @@
+require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 const readline = require('readline');
 
 const configuration = new Configuration({
-    organization: "org-s1fyriVXcOB5aENTCYkROkUH",
-    apiKey: "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"
+    organization: process.env.OPENAI_ORG,
+    apiKey: process.env.OPENAI_API_KEY
 });
+
 const openai = new OpenAIApi(configuration);
 
 // Create the terminal input
@@ -44,7 +46,7 @@ const handleQuestion = (question) => {
         if (error.statusCode === 429) {
             console.log("Error: You have exceeded the rate limit. Please wait and try again later.");
         } else {
-            console.log("Error: An unexpected error has occurred.");
+            console.log("Error: An unexpected error has occurred: ", error.statusCode);
         }
         return rl.close();
     });
