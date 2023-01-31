@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "author": "Peter Blenessy <peter.blenessy@gmail.com>",
     "license": "MIT",
-    "main": "index.js",
+    "main": "index.mjs",
     "scripts": {
         "dev": "yarn dev",
         "build": "yarn build",
