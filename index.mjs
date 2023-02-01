@@ -15,18 +15,20 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 // Create the terminal input
-const rl = readline.createInterface({ input, output });
+const prompt = "ASK: ";
+const rl = readline.createInterface({ input, output, prompt });
 
 // Completion options
 const aiOptions = { 
     model: "text-davinci-003",
-    temperature: 0.5
+    temperature: 0.5,
+    max_tokens: 2048
 };
 
-const prompt = "Type your question ['quit' ends the conversation] \n";
 let conversationLog = [];
+console.log("Type your question ['quit' ends the conversation] \n");
 
-rl.write(prompt);
+rl.prompt();
 
 rl.on('line', (question) => {
 
@@ -38,18 +40,22 @@ rl.on('line', (question) => {
 
     // Check if the user wants to end the conversation
     if (question.toLowerCase() === "quit") {
-        console.log("Goodbye!");
         return rl.close();
     }
 
     // Call OpenAI API
     openai.createCompletion({ ...aiOptions, prompt: question })
     .then( response => {
-        console.log('Answer: ' + response.data.choices[0].text);
-        conversationLog.push({ user: question, bot: response.data.choices[0].text });
+        rl.pause();
+        console.log('BOT: ' + response.data.choices[0].text.trim() + "\n");
+        conversationLog.push({ user: question, bot: response.data.choices[0].text.trim(), ...response.data.usage });
     }).catch( error => {
         console.error("Error: An unexpected error has occurred: ", error.statusCode);
     }).finally(() => {
+        rl.prompt();
     });
 
+}).on('close', () => {
+    console.log("Goodbye!");
+    process.exit(0);
 });
