@@ -29,7 +29,17 @@ const aiOptions = {
 let conversationLog = [];
 let chatHistory = "";
 
-console.log("Type your question ['quit' ends the conversation] \n");
+console.log("Ask your questions and the AI will respond");
+const commands = {
+    "quit": "ends the conversation",
+    "clear": "clears conversation history",
+    "help": "prints this list of commands"
+};
+
+const printCommands = () => {
+    for (const [key, value] of Object.entries(commands)) console.log(`\t - ${key} \t ${value}`);
+}
+printCommands();
 
 rl.prompt();
 
@@ -44,6 +54,19 @@ rl.on('line', (question) => {
     // Check if the user wants to end the conversation
     if (question.toLowerCase() === "quit") {
         return rl.close();
+    }
+
+    // Clear conversation history
+    if (question.toLowerCase() === "clear") {
+        chatHistory = "";
+        return rl.prompt();
+    }
+
+    // Print help information
+    if (question.toLowerCase() === "help") {
+        rl.pause();
+        printCommands();
+        return rl.prompt();
     }
 
     chatHistory += "\nUSER: " + question + "\nAI: ";
