@@ -15,17 +15,20 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 // Create the terminal input
-const prompt = "ASK: ";
+const prompt = "USER: ";
 const rl = readline.createInterface({ input, output, prompt });
 
 // Completion options
 const aiOptions = { 
     model: "text-davinci-003",
     temperature: 0.5,
-    max_tokens: 2048
+    max_tokens: 2048,
+    stop: ["\nUSER: ", "\nAI: "]
 };
 
 let conversationLog = [];
+let chatHistory = "";
+
 console.log("Type your question ['quit' ends the conversation] \n");
 
 rl.prompt();
@@ -43,14 +46,17 @@ rl.on('line', (question) => {
         return rl.close();
     }
 
+    chatHistory += "\nUSER: " + question + "\nAI: ";
+
     // Call OpenAI API
-    openai.createCompletion({ ...aiOptions, prompt: question })
+    openai.createCompletion({ ...aiOptions, prompt: chatHistory })
     .then( response => {
         rl.pause();
-        console.log('BOT: ' + response.data.choices[0].text.trim() + "\n");
-        conversationLog.push({ user: question, bot: response.data.choices[0].text.trim(), ...response.data.usage });
+        console.log("AI: " + response.data.choices[0].text.trim() + "\n");
+        chatHistory += response.data.choices[0].text.trim();
+        conversationLog.push({ time: new Date().getTime(), user: question, ai: response.data.choices[0].text.trim(), ...response.data.usage });
     }).catch( error => {
-        console.error("Error: An unexpected error has occurred: ", error.statusCode);
+        console.error("Error: An unexpected error has occurred: ", error);
     }).finally(() => {
         rl.prompt();
     });
