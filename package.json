@@ -2,12 +2,23 @@
     "private": true,
     "name": "openai-cli",
     "version": "0.1.0",
+    "description": "Node.js® based command line chatbot using OpenAI API",
     "author": "Peter Blenessy <peter.blenessy@gmail.com>",
     "license": "MIT",
+    "keywords": [
+        "openai",
+        "chat-gpt",
+        "cli"
+    ],
+    "type": "module",
     "main": "index.mjs",
     "scripts": {
         "start": "node index.mjs"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/peterblenessy/openai-node-cli.git"
+      },
     "dependencies": {
         "dotenv": "^16.0.3",
         "openai": "^3.1.0"
