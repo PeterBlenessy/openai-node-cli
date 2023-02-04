@@ -1,14 +1,12 @@
 {
     "private": true,
-    "name": "openai-node",
+    "name": "openai-cli",
     "version": "0.1.0",
     "author": "Peter Blenessy <peter.blenessy@gmail.com>",
     "license": "MIT",
     "main": "index.mjs",
     "scripts": {
-        "dev": "yarn dev",
-        "build": "yarn build",
-        "start": "yarn start"
+        "start": "node index.mjs"
     },
     "dependencies": {
         "dotenv": "^16.0.3",
